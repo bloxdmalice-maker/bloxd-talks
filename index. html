@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloxd Talks | Competitive Bloxd.io</title>
+<meta name="description" content="Bloxd Talks — competitive Bloxd.io tier testing, player rankings and PvP gamemodes.">
+<style>
+:root{--bg:#11131b;--panel:#1b1e29;--panel2:#202331;--line:#2c3040;--text:#f1f2fa;--muted:#9297aa;--blue:#5865f2;--blue2:#6380ff;--pink:#f1a0a4;--gold:#f4cc78}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:180px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:20;background:rgba(27,30,41,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{max-width:1150px;margin:auto;padding:18px 24px 20px}
+.brand{display:flex;align-items:center;gap:15px;margin-bottom:22px;font-size:clamp(23px,4vw,34px);font-weight:850;letter-spacing:-.7px}
+.brand img{width:62px;height:62px;object-fit:contain;border-radius:12px}
+.navlinks{display:flex;flex-wrap:wrap;gap:12px}
+.pill,.button{display:inline-flex;justify-content:center;align-items:center;border:1px solid var(--line);border-radius:999px;padding:12px 23px;background:transparent;font-size:16px;font-weight:700;cursor:pointer;transition:.2s}
+.pill:hover{border-color:#626a91;background:#242837}
+.button{border:0;background:linear-gradient(120deg,var(--blue),var(--blue2));color:white}
+.button:hover{filter:brightness(1.1);transform:translateY(-1px)}
+main{max-width:1150px;margin:auto;padding:0 24px 70px}
+section{padding:62px 0 10px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(36px,6vw,62px);line-height:1.1;letter-spacing:-1.5px;margin-bottom:18px}
+h2{font-size:clamp(28px,4vw,42px);line-height:1.2;margin-bottom:12px;letter-spacing:-.5px}
+h3{font-size:21px;margin-bottom:8px}
+.lead,.sub{color:var(--muted);font-size:18px}
+.hero{padding-top:55px;padding-bottom:30px}
+.hero .lead{max-width:680px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px}
+.stat,.card,.player-row,.step,.tier-card,.mode-card,.rule-card{background:var(--panel);border:1px solid var(--line);border-radius:22px}
+.stat{padding:19px 22px}.stat strong{display:block;font-size:27px}.stat span{color:var(--muted)}
+.section-head{margin-bottom:26px}
+.podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:end;margin-bottom:22px}
+.podium-card{padding:22px 15px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:22px;min-width:0}
+.podium-card.first{border-color:#7568c8;min-height:210px;padding-top:30px}
+.podium-card.second{min-height:180px}.podium-card.third{min-height:160px}
+.medal{font-size:31px;display:block;margin-bottom:6px}
+.place{font-size:13px;letter-spacing:2px;color:var(--muted);font-weight:800}
+.player-name{font-weight:800;font-size:19px;overflow-wrap:anywhere}
+.tier-badge{display:inline-block;margin-top:8px;padding:4px 11px;border-radius:999px;background:#292d48;color:#aebcff;font-weight:800}
+.searchbar{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}
+input,select{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--text);font:inherit;outline:none}
+input{flex:1;min-width:190px}select{min-width:160px}
+input:focus,select:focus{border-color:var(--blue)}
+.player-list{display:grid;gap:10px}
+.player-row{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 18px}
+.rank{width:42px;height:42px;border:1px solid #4756a0;background:#252b46;color:#b8c7ff;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.player-info{min-width:0}.player-info strong{display:block;overflow-wrap:anywhere}.player-info small{color:var(--muted)}
+.row-tier{text-align:right;font-weight:800;color:#b9c5ff}.row-tier small{display:block;color:var(--muted);font-weight:500}
+.empty{padding:24px;text-align:center;color:var(--muted);display:none}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mode-card{display:flex;align-items:center;gap:15px;padding:19px}
+.mode-icon{width:54px;height:54px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:#11131b;border:1px solid var(--line);font-size:25px}
+.mode-card strong{font-size:19px}
+.tiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tier-card{padding:22px;border-top:4px solid #a8b4ff}
+.tier-card:nth-child(1){border-top-color:var(--gold)}.tier-card:nth-child(3){border-top-color:#e9a072}.tier-card:nth-child(4){border-top-color:#8ca4ff}.tier-card:nth-child(5){border-top-color:#c3a9ee}
+.tier-card h3{color:var(--muted);font-size:16px;letter-spacing:1px}
+.tier-line{display:flex;align-items:center;gap:16px;margin-top:10px}
+.tier-line b{font-size:24px;min-width:48px}.tier-line span{color:var(--muted)}
+.steps{display:grid;gap:12px}
+.step{display:flex;align-items:center;gap:18px;padding:18px 20px;font-size:18px}
+.step-num{width:44px;height:44px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;border:1px solid #4656a0;background:#252b46;color:#b8c7ff;font-weight:800}
+.result-tags{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.result-tags span{border:1px solid var(--line);border-radius:999px;background:var(--panel);padding:9px 18px;font-weight:700}
+.rule-card{padding:28px 30px;background:#301f27;border-color:#70404b;margin-top:50px}
+.rule-card h2{color:var(--pink)}.rule-card p{color:#e3c4c8;margin-bottom:0;font-size:17px}
+.closing{text-align:center;padding:75px 0 25px}
+.closing h2{font-size:clamp(24px,4vw,36px);letter-spacing:5px;color:var(--muted)}
+.closing .button{margin-top:14px;padding:17px 35px;font-size:18px}
+footer{border-top:1px solid var(--line);padding:28px 24px;text-align:center;color:var(--muted)}
+footer strong{color:var(--text)}
+.modal-backdrop{display:none;position:fixed;inset:0;background:#05060bd9;z-index:50;align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{width:min(430px,100%);padding:26px;background:var(--panel);border:1px solid var(--line);border-radius:22px}
+.modal input{width:100%;margin:8px 0}
+.modal-actions{display:flex;gap:10px;margin-top:12px}.modal-actions>*{flex:1}
+.note{color:var(--muted);font-size:13px;margin-top:14px}
+@media(min-width:900px){.nav{padding-top:20px}.brand{margin-bottom:18px}.hero{padding-top:75px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.nav{padding:15px 18px}.brand{gap:12px;margin-bottom:17px}.brand img{width:54px;height:54px}.navlinks{gap:9px}.pill,.button{padding:10px 15px;font-size:15px}main{padding:0 18px 45px}section{padding-top:48px}.stats{gap:8px}.stat{padding:14px 11px}.stat strong{font-size:21px}.stat span{font-size:12px}.podium{gap:8px}.podium-card{padding:17px 7px}.podium-card.first{min-height:190px}.podium-card.second{min-height:165px}.podium-card.third{min-height:145px}.player-name{font-size:15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mode-card{padding:13px 10px;gap:10px}.mode-icon{width:44px;height:44px;font-size:21px}.mode-card strong{font-size:15px}.tiers{gap:10px}.tier-card{padding:15px}.tier-line{gap:9px}.tier-line b{font-size:21px;min-width:42px}.tier-line span{font-size:13px}.rule-card{padding:22px 20px}.player-row{grid-template-columns:42px minmax(0,1fr) auto;padding:12px 11px;gap:10px}.rank{width:38px;height:38px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="brand" href="#home" aria-label="Bloxd Talks home">
+      <img src="talks.png" alt="Bloxd Talks logo">
+      <span>Bloxd Talks</span>
+    </a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a class="pill" href="#leaderboard">Leaderboard</a>
+      <a class="pill" href="#tiers">Tier System</a>
+      <a class="button" href="https://discord.gg/4gEP8NMVA" target="_blank" rel="noopener">Join the Discord</a>
+      <button class="pill" id="loginOpen" type="button">Tester Login</button>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero" id="home">
+    <p class="place">THE BLOXD.IO COMPETITIVE COMMUNITY</p>
+    <h1>Test. Compete.<br><span style="color:#8292ff">Rank.</span></h1>
+    <p class="lead">Prove your skill, get officially tested, and climb the Bloxd Talks rankings.</p>
+    <div class="hero-actions">
+      <a class="button" href="#leaderboard">View the Leaderboard</a>
+      <a class="pill" href="#testing">How to Get Tested</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong id="playerCount">0</strong><span>Ranked players</span></div>
+      <div class="stat"><strong>7+</strong><span>Testing gamemodes</span></div>
+      <div class="stat"><strong>HT1–LT5</strong><span>Tier system</span></div>
+    </div>
+  </section>
+
+  <section id="leaderboard">
+    <div class="section-head"><h2>Leaderboard</h2><p class="sub">The top players in Bloxd Talks.</p></div>
+    <div class="podium" id="podium"></div>
+    <div class="searchbar">
+      <input id="playerSearch" type="search" placeholder="Search player..." aria-label="Search player">
+      <select id="modeFilter" aria-label="Filter by gamemode">
+        <option value="all">All gamemodes</option>
+        <option>Classic Sword</option><option>Enchanted Sword</option><option>Mace</option>
+        <option>Spear-Mace</option><option>SkyWars</option><option>BedWars</option><option>Soup</option>
+      </select>
+    </div>
+    <div class="player-list" id="playerList"></div>
+    <div class="empty" id="emptyState">No players match your search.</div>
+    <p class="note">Demo player entries are examples. Replace them with your actual ranked players after setup.</p>
+  </section>
+
+  <section id="tiers">
+    <div class="section-head"><h2>Tier System</h2><p class="sub">Your tier represents your performance during an official test.</p></div>
+    <div class="tiers">
+      <article class="tier-card"><h3>TIER 1</h3><div class="tier-line"><b style="color:#f4cc78">HT1</b><span>High Tier 1</span></div><div class="tier-line"><b style="color:#f4cc78">LT1</b><span>Low Tier 1</span></div></article>
+      <article class="tier-card"><h3>TIER 2</h3><div class="tier-line"><b>HT2</b><span>High Tier 2</span></div><div class="tier-line"><b>LT2</b><span>Low Tier 2</span></div></article>
+      <article class="tier-card"><h3>TIER 3</h3><div class="tier-line"><b style="color:#e9a072">HT3</b><span>High Tier 3</span></div><div class="tier-line"><b style="color:#e9a072">LT3</b><span>Low Tier 3</span></div></article>
+      <article class="tier-card"><h3>TIER 4</h3><div class="tier-line"><b style="color:#8ca4ff">HT4</b><span>High Tier 4</span></div><div class="tier-line"><b style="color:#8ca4ff">LT4</b><span>Low Tier 4</span></div></article>
+      <article class="tier-card"><h3>TIER 5</h3><div class="tier-line"><b style="color:#c3a9ee">HT5</b><span>High Tier 5</span></div><div class="tier-line"><b style="color:#c3a9ee">LT5</b><span>Low Tier 5</span></div></article>
+    </div>
+  </section>
+
+  <section id="gamemodes">
+    <div class="section-head"><h2>Testing Gamemodes</h2><p class="sub">Pick a gamemode and get tested.</p></div>
+    <div class="grid">
+      <article class="mode-card"><span class="mode-icon">⚔️</span><strong>Classic Sword</strong></article>
+      <article class="mode-card"><span class="mode-icon">✨⚔️</span><strong>Enchanted Sword</strong></article>
+      <article class="mode-card"><span class="mode-icon">🔨</span><strong>Mace</strong></article>
+      <article class="mode-card"><span class="mode-icon">🗡️</span><strong>Spear-Mace</strong></article>
+      <article class="mode-card"><span class="mode-icon">☁️</span><strong>SkyWars</strong></article>
+      <article class="mode-card"><span class="mode-icon">🛏️</span><strong>BedWars</strong></article>
+      <article class="mode-card"><span class="mode-icon">🍲</span><strong>Soup</strong></article>
+    </div>
+  </section>
+
+  <section id="testing">
+    <div class="section-head"><h2>How to Get Tested</h2><p class="sub">Everything happens in our Discord server.</p></div>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span>Go to the ticket channel</div>
+      <div class="step"><span class="step-num">2</span>Open a testing ticket</div>
+      <div class="step"><span class="step-num">3</span>Choose your gamemode</div>
+      <div class="step"><span class="step-num">4</span>Complete your warmup</div>
+      <div class="step"><span class="step-num">5</span>Play your official test</div>
+      <div class="step"><span class="step-num">6</span>Tester reviews your performance</div>
+      <div class="step"><span class="step-num">7</span>Receive your tier and results</div>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="section-head"><h2>Your Results</h2><p class="sub">Testing results can include your:</p></div>
+    <div class="result-tags"><span>Tier</span><span>Points</span><span>Gamemode</span><span>Tester</span><span>Test results</span></div>
+    <p class="sub">Climb the rankings and prove your skill.</p>
+  </section>
+
+  <section>
+    <div class="rule-card"><h2>Fair Play</h2><p>All tests must be played fairly. Cheats, exploits, macros and other unfair advantages can result in your test being cancelled and moderation action.</p></div>
+  </section>
+
+  <section class="closing">
+    <h2>TEST. COMPETE. RANK.</h2>
+    <a class="button" href="#leaderboard">View the Leaderboard</a>
+  </section>
+</main>
+<footer><strong>Bloxd Talks</strong><br>Competitive Bloxd.io rankings and tier testing.<br><span>Made for the community 💜</span></footer>
+
+<div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="modal">
+    <h2 id="loginTitle">Tester Login</h2>
+    <p class="sub">Tester login preview</p>
+    <form id="loginForm">
+      <input id="testerName" autocomplete="username" placeholder="Tester username" required>
+      <input id="testerPassword" type="password" autocomplete="current-password" placeholder="Password" required>
+      <div class="modal-actions"><button class="button" type="submit">Log in</button><button class="pill" id="loginClose" type="button">Cancel</button></div>
+    </form>
+    <p class="note">This is only a front-end preview. Real, secure tester accounts need a backend/authentication setup; this form does not verify credentials.</p>
+  </div>
+</div>
+<script>
+const players = [
+  {name:"ExamplePlayer1",tier:"HT1",mode:"Classic Sword",points:1200},
+  {name:"ExamplePlayer2",tier:"LT1",mode:"Mace",points:1100},
+  {name:"ExamplePlayer3",tier:"HT2",mode:"SkyWars",points:1000},
+  {name:"ExamplePlayer4",tier:"LT2",mode:"BedWars",points:900},
+  {name:"ExamplePlayer5",tier:"HT3",mode:"Enchanted Sword",points:800},
+  {name:"ExamplePlayer6",tier:"LT3",mode:"Spear-Mace",points:700},
+  {name:"ExamplePlayer7",tier:"HT4",mode:"Soup",points:600}
+];
+const podium=document.getElementById("podium");
+const playerList=document.getElementById("playerList");
+const search=document.getElementById("playerSearch");
+const filter=document.getElementById("modeFilter");
+const empty=document.getElementById("emptyState");
+document.getElementById("playerCount").textContent=players.length;
+function renderPodium(){
+ const sorted=[...players].sort((a,b)=>b.points-a.points).slice(0,3);
+ const medals=["🥇","🥈","🥉"];
+ const places=["1ST PLACE","2ND PLACE","3RD PLACE"];
+ const order=[1,0,2].filter(i=>sorted[i]);
+ podium.innerHTML=order.map(i=>`<article class="podium-card ${i===0?"first":i===1?"second":"third"}"><span class="medal">${medals[i]}</span><div class="place">${places[i]}</div><div class="player-name">${escapeText(sorted[i].name)}</div><div class="tier-badge">${escapeText(sorted[i].tier)}</div><p class="sub" style="font-size:14px;margin:10px 0 0">${sorted[i].points} points</p></article>`).join("");
+}
+function escapeText(value){return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderPlayers(){
+ const query=search.value.trim().toLowerCase(), mode=filter.value;
+ const sorted=[...players].sort((a,b)=>b.points-a.points);
+ const visible=sorted.filter(p=>(p.name.toLowerCase().includes(query)||p.tier.toLowerCase().includes(query))&&(mode==="all"||p.mode===mode));
+ playerList.innerHTML=visible.map(p=>`<article class="player-row"><div class="rank">#${sorted.indexOf(p)+1}</div><div class="player-info"><strong>${escapeText(p.name)}</strong><small>${escapeText(p.mode)} · ${p.points} points</small></div><div class="row-tier">${escapeText(p.tier)}<small>Tier</small></div></article>`).join("");
+ empty.style.display=visible.length?"none":"block";
+}
+search.addEventListener("input",renderPlayers);filter.addEventListener("change",renderPlayers);
+renderPodium();renderPlayers();
+const modal=document.getElementById("loginModal");
+document.getElementById("loginOpen").addEventListener("click",()=>modal.classList.add("open"));
+document.getElementById("loginClose").addEventListener("click",()=>modal.classList.remove("open"));
+modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("open")});
+document.getElementById("loginForm").addEventListener("submit",e=>{e.preventDefault();alert("Tester login is a demo only. Secure login is not connected yet.");});
+</script>
+</body>
+</html>
